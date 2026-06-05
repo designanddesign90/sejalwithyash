@@ -1,5 +1,5 @@
 <html lang="en"><head>
-<script type="application/json" id="wedding-config">{"couple":{"bride":"Sejal","groom":"Yash","date":"2026-06-26","venue":"","whatsapp":"","hashtag":"#SejalWedsYash"},"invite":{"blessing":"","brideFather":"","brideMother":"","groomFather":"","groomMother":"","showGrandparents":false,"brideGF":"","brideGM":"","groomGF":"","groomGM":""},"events":[],"story":{"show":true,"customHashtag":"","tags":[]},"gallery":{"show":true,"layout":"4","photos":["https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/Arch_Demo2.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/Arch_demo.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/landscape_demo.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/hero-arch_demo.png"]},"thingsToKnow":[],"rsvp":{"mode":"whatsapp","heading":"Will you join us?","subtext":"We've saved a seat for you — at our table, in our hearts, and under the royal sky. Come celebrate with us as we begin this new chapter together.","btnText":"Yes, I'll be there","whatsapp":""},"music":{"enabled":false,"src":"","name":""},"calendarUrls":{"google":"https://calendar.google.com/calendar/render?action=TEMPLATE\u0026text=Sejal%20weds%20Yash\u0026dates=20261212/20261213\u0026location=","apple":"data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20261212%0ADTEND:20261213%0ASUMMARY:Sejal%20weds%20Yash%0ALOCATION:%0AEND:VEVENT%0AEND:VCALENDAR"}}</script>
+<script type="application/json" id="wedding-config">{"couple":{"bride":"Sejal","groom":"Yash","date":"2026-06-26","venue":"","whatsapp":"","hashtag":"#SejalWedsYash"},"invite":{"blessing":"","brideFather":"","brideMother":"","groomFather":"","groomMother":"","showGrandparents":false,"brideGF":"","brideGM":"","groomGF":"","groomGM":""},"events":[],"story":{"show":true,"customHashtag":"","tags":[]},"gallery":{"show":true,"layout":"4","photos":[]},"thingsToKnow":[],"rsvp":{"mode":"whatsapp","heading":"Will you join us?","subtext":"We've saved a seat for you — at our table, in our hearts, and under the royal sky. Come celebrate with us as we begin this new chapter together.","btnText":"Yes, I'll be there","whatsapp":""},"music":{"enabled":false,"src":"","name":""},"calendarUrls":{"google":"https://calendar.google.com/calendar/render?action=TEMPLATE\u0026text=Sejal%20weds%20Yash\u0026dates=20260626/20260626\u0026location=","apple":"data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260626%0ADTEND:20260626%0ASUMMARY:Sejal%20weds%20Yash%0ALOCATION:%0AEND:VEVENT%0AEND:VCALENDAR"}}</script>
 <script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
 <script>
 </script>
@@ -83,32 +83,6 @@ function frame(){
     }
     frame();
 
-function updateWeddingCountdown() {
-    const now = new Date().getTime();
-    const distanceLeft = targetWeddingDate - now;
-
-    if (distanceLeft < 0) {
-        document.querySelector(".countdown-title").innerHTML = "THE CELEBRATION IS LIVE! 🎉";
-        document.getElementById("days").innerText = "00";
-        document.getElementById("hours").innerText = "00";
-        document.getElementById("minutes").innerText = "00";
-        document.getElementById("seconds").innerText = "00";
-        clearInterval(countdownInterval);
-        return;
-    }
-
-    const d = Math.floor(distanceLeft / (1000 * 60 * 60 * 24));
-    const h = Math.floor((distanceLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((distanceLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((distanceLeft % (1000 * 60)) / 1000);
-
-    document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-    document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-    document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
-    document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
-}
-updateWeddingCountdown();
-const countdownInterval = setInterval(updateWeddingCountdown, 1000);
 })();
 </script><base href="">
   <meta charset="utf-8">
@@ -340,7 +314,7 @@ const countdownInterval = setInterval(updateWeddingCountdown, 1000);
     <!-- Ceremonial journey — vine path + event cards -->
     <div class="evt-journey">
       <div class="evt-path-wrap" id="evtPathWrap" aria-hidden="true">
-        <img class="evt-path-vine" src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/event/pn-evt-pth-ceremonial-vine-m-v01.webp" alt="" aria-hidden="true" decoding="async">
+        <img class="evt-path-vine" src="pn-evt-pth-ceremonial-vine-m-v01.webp" alt="" aria-hidden="true" decoding="async">
       </div>
       <div class="evt-stops" id="evtStops" role="list"></div>
     </div>
@@ -385,7 +359,7 @@ const countdownInterval = setInterval(updateWeddingCountdown, 1000);
 
         <!-- Wedding Date Display -->
         <p style="letter-spacing: 1px; font-weight: 300; margin-bottom: 1.5rem;">
-            June 26, 2026 &bull; 8:30 PM
+            Friday, June 26, 2026 &bull; 8:30 PM
         </p>
 
         <a href="#" class="btn-rsvp">View Invitation</a>
@@ -420,7 +394,7 @@ const countdownInterval = setInterval(updateWeddingCountdown, 1000);
 
     <!-- ── Lotus divider (from provided asset, top of section) ── -->
     <div class="rsvp-lotus-top" aria-hidden="true">
-      <img src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/rsvp/pn-rsvp-div-finale-lotus-x-v01.webp" alt="" decoding="async" loading="lazy">
+      <img src="pn-rsvp-div-finale-lotus-x-v01.webp" alt="" decoding="async" loading="lazy">
     </div>
 
     <!-- ── Content block ── -->
@@ -517,7 +491,7 @@ const countdownInterval = setInterval(updateWeddingCountdown, 1000);
   <!-- Circular Pichwai menu panel -->
   <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Site navigation">
     <div class="menu-bg-circle">
-      <img class="menu-bg-img" src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/Menu_background.webp" alt="" aria-hidden="true" draggable="false">
+      <img class="menu-bg-img" src="Menu_background.webp" alt="" aria-hidden="true" draggable="false">
     </div>
     <div class="menu-nav-header" aria-hidden="true">Navigation</div>
     <div class="menu-lotus-top" aria-hidden="true">

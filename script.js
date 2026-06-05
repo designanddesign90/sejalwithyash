@@ -47,7 +47,7 @@ const EVENTS = [
   },
   {
     id: "reception",
-    icon: "pn-evt-ico-sangeet-x-v01.WebP",
+    icon: "pn-evt-ico-sangeet-x-v01.webp",
     name: "Nach de ne saare",
     date: "24 June 2026", time: "8:00 PM",
     venue: "GRAND ORIENT",
