@@ -1,0 +1,614 @@
+<html lang="en"><head>
+<script type="application/json" id="wedding-config">{"couple":{"bride":"Sejal","groom":"Yash","date":"2026-06-26","venue":"","whatsapp":"","hashtag":"#SejalWedsYash"},"invite":{"blessing":"","brideFather":"","brideMother":"","groomFather":"","groomMother":"","showGrandparents":false,"brideGF":"","brideGM":"","groomGF":"","groomGM":""},"events":[],"story":{"show":true,"customHashtag":"","tags":[]},"gallery":{"show":true,"layout":"4","photos":["https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/Arch_Demo2.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/Arch_demo.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/landscape_demo.png","https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/Demo/hero-arch_demo.png"]},"thingsToKnow":[],"rsvp":{"mode":"whatsapp","heading":"Will you join us?","subtext":"We've saved a seat for you — at our table, in our hearts, and under the royal sky. Come celebrate with us as we begin this new chapter together.","btnText":"Yes, I'll be there","whatsapp":""},"music":{"enabled":false,"src":"","name":""},"calendarUrls":{"google":"https://calendar.google.com/calendar/render?action=TEMPLATE\u0026text=Sejal%20weds%20Yash\u0026dates=20261212/20261213\u0026location=","apple":"data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20261212%0ADTEND:20261213%0ASUMMARY:Sejal%20weds%20Yash%0ALOCATION:%0AEND:VEVENT%0AEND:VCALENDAR"}}</script>
+<script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
+<script>
+</script>
+<script>
+(function() {
+  var bride = 'Sejal';
+  var groom = 'Yash';
+  var hashtag  = '#yashwalesejallejayge';
+  function updatePreloader() {
+    // Names in preloader
+    var n1 = document.querySelector('.pl-n1');
+    var n2 = document.querySelector('.pl-n2');
+    if (n1) n1.textContent = bride;
+    if (n2) n2.textContent = groom;
+    // Names in hero copy
+    var hb = document.querySelector('.hc-bride');
+    var hg = document.querySelector('.hc-groom');
+    if (hb) hb.textContent = bride;
+    if (hg) hg.textContent = groom;
+    // template09: patch #introNames .word spans
+    var introNames = document.getElementById('introNames');
+    if (introNames && bride && groom) {
+      var words = Array.from(introNames.querySelectorAll('.word')).filter(function(w) {
+        return !w.classList.contains('amp-wrap');
+      });
+      if (words.length >= 2) { words[0].textContent = bride; words[words.length - 1].textContent = groom; }
+    }
+    // template09: patch intro #hashtag and venue
+    var introDate = document.getElementById('introDate');
+    if (introDate && date) introDate.textContent = date;
+
+    // Fallback: replace any leaf text still reading the placeholder names
+    document.querySelectorAll('*').forEach(function(el) {
+      if (el.children.length === 0 && el.textContent.trim() === 'Priya') el.textContent = bride;
+      if (el.children.length === 0 && el.textContent.trim() === 'Arjun') el.textContent = groom;
+    });
+    // Date injection
+    if (date) {
+      var found = false;
+      document.querySelectorAll('*').forEach(function(el) {
+        if (el.children.length === 0) {
+          var txt = el.textContent.trim();
+          if (
+            txt === '14 February 2025' || txt === '14 FEBRUARY 2025' ||
+            el.classList.contains('pre-date') ||
+            el.classList.contains('preloader-date') ||
+            el.classList.contains('pl-date')
+          ) {
+            el.textContent = date;
+            found = true;
+          }
+        }
+      });
+      // No existing date element found — insert one after .pl-names
+      if (!found) {
+        var container = document.querySelector('.pl-names') || document.querySelector('.pl-content');
+        if (container && !container.querySelector('.pl-date-injected')) {
+          var dateEl = document.createElement('span');
+          dateEl.className = 'pl-date-injected';
+          dateEl.textContent = date;
+          dateEl.style.cssText = 'display:block;font-family:"DM Sans",sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,152,90,0.75);margin-top:10px;';
+          container.appendChild(dateEl);
+        }
+      }
+    }
+  }
+  updatePreloader();  
+  document.addEventListener('DOMContentLoaded', updatePreloader);
+const targetWeddingDate = new Date("June 26, 2026 08:00:00").getTime();
+function frame(){
+      cx.clearRect(0,0,c.width,c.height);
+      let alive = false;
+      parts.forEach(p=>{
+        p.vy += p.g; p.x += p.vx; p.y += p.vy; p.life -= .01;
+        if(p.life > 0){
+          alive = true; cx.save(); cx.globalAlpha = p.life;
+          cx.fillStyle = p.color; cx.fillRect(p.x, p.y, p.size, p.size*1.5); cx.restore();
+        }
+      });
+      if(alive) requestAnimationFrame(frame); else c.remove();
+    }
+    frame();
+
+function updateWeddingCountdown() {
+    const now = new Date().getTime();
+    const distanceLeft = targetWeddingDate - now;
+
+    if (distanceLeft < 0) {
+        document.querySelector(".countdown-title").innerHTML = "THE CELEBRATION IS LIVE! 🎉";
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+        clearInterval(countdownInterval);
+        return;
+    }
+
+    const d = Math.floor(distanceLeft / (1000 * 60 * 60 * 24));
+    const h = Math.floor((distanceLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((distanceLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((distanceLeft % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+    document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+    document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+    document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+}
+updateWeddingCountdown();
+const countdownInterval = setInterval(updateWeddingCountdown, 1000);
+})();
+</script><base href="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sejal &amp; Yash· Barish Designers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Parisienne&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-active">
+
+<!-- ═══════════════════════════════════
+     INTRO
+═══════════════════════════════════ -->
+<section class="intro is-waiting" id="intro" aria-label="Opening scene" style="--px-bg-x: 0.00px; --px-bg-y: 8.00px; --px-jhm-x: 0.00px; --px-jhm-y: -14.00px; --px-flr-x: 0.00px; --px-flr-y: -34.00px; --px-dya-x: 0.00px; --px-dya-y: -19.00px;">
+
+  <!-- Background layers -->
+  <img class="intro-bg intro-bg-dark" id="introBgDark" alt="" aria-hidden="true" decoding="async" fetchpriority="high" src="pn-hro-bg-courtyard-dark-D-v03.webp">
+  <img class="intro-bg intro-bg-lit" id="introBgLit" alt="" aria-hidden="true" decoding="async" src="pn-hro-bg-courtyard-lit-d-v03.webp">
+
+  <!-- Glow system -->
+  <div class="intro-vignette" aria-hidden="true"></div>
+  <div class="intro-dark-vignette" aria-hidden="true"></div>
+  <div class="intro-warm-glow" aria-hidden="true"></div>
+  <div class="intro-jhoomer-glow" aria-hidden="true"></div>
+  <div class="intro-rose-scatter" aria-hidden="true"></div>
+
+  <!-- Particles (lit only) -->
+  <div class="intro-dust" id="introDust" aria-hidden="true"><div class="dust-particle" style="width: 2.30956px; height: 2.30956px; left: 36.0288%; bottom: 9.26909%; animation-duration: 9.11207s; animation-delay: 5.1524s;"></div><div class="dust-particle" style="width: 1.54243px; height: 1.54243px; left: 42.9286%; bottom: 31.9254%; animation-duration: 16.9126s; animation-delay: 5.23251s;"></div><div class="dust-particle" style="width: 1.58219px; height: 1.58219px; left: 45.0128%; bottom: 63.6925%; animation-duration: 9.61074s; animation-delay: 7.47215s;"></div><div class="dust-particle" style="width: 1.4864px; height: 1.4864px; left: 36.5432%; bottom: 32.8856%; animation-duration: 16.742s; animation-delay: 5.48911s;"></div><div class="dust-particle" style="width: 2.66651px; height: 2.66651px; left: 42.6859%; bottom: 49.8876%; animation-duration: 9.91782s; animation-delay: 0.686226s;"></div><div class="dust-particle" style="width: 2.82255px; height: 2.82255px; left: 22.8216%; bottom: 66.219%; animation-duration: 7.66515s; animation-delay: 6.87411s;"></div><div class="dust-particle" style="width: 1.8939px; height: 1.8939px; left: 22.2142%; bottom: 55.4207%; animation-duration: 10.1388s; animation-delay: 7.33707s;"></div><div class="dust-particle" style="width: 1.05398px; height: 1.05398px; left: 51.5277%; bottom: 30.2925%; animation-duration: 16.6854s; animation-delay: 7.14132s;"></div><div class="dust-particle" style="width: 1.81097px; height: 1.81097px; left: 71.9387%; bottom: 31.4323%; animation-duration: 11.6238s; animation-delay: 7.85507s;"></div><div class="dust-particle" style="width: 1.51382px; height: 1.51382px; left: 53.3121%; bottom: 33.6781%; animation-duration: 11.114s; animation-delay: 5.04134s;"></div><div class="dust-particle" style="width: 3.20056px; height: 3.20056px; left: 55.9985%; bottom: 39.7662%; animation-duration: 8.04208s; animation-delay: 1.96669s;"></div><div class="dust-particle" style="width: 1.7102px; height: 1.7102px; left: 33.1371%; bottom: 19.4438%; animation-duration: 8.62912s; animation-delay: 4.03492s;"></div><div class="dust-particle" style="width: 2.16999px; height: 2.16999px; left: 58.8387%; bottom: 59.4485%; animation-duration: 9.41674s; animation-delay: 3.43264s;"></div><div class="dust-particle" style="width: 2.93243px; height: 2.93243px; left: 64.9881%; bottom: 49.1464%; animation-duration: 9.4331s; animation-delay: 6.70348s;"></div><div class="dust-particle" style="width: 3.45361px; height: 3.45361px; left: 67.3726%; bottom: 49.1515%; animation-duration: 8.58242s; animation-delay: 5.0594s;"></div><div class="dust-particle" style="width: 1.19846px; height: 1.19846px; left: 34.4262%; bottom: 11.0394%; animation-duration: 14.5354s; animation-delay: 5.43385s;"></div><div class="dust-particle" style="width: 1.34261px; height: 1.34261px; left: 35.0515%; bottom: 57.0149%; animation-duration: 8.44579s; animation-delay: 5.8711s;"></div><div class="dust-particle" style="width: 2.24714px; height: 2.24714px; left: 30.4062%; bottom: 29.7391%; animation-duration: 9.93546s; animation-delay: 5.83965s;"></div><div class="dust-particle" style="width: 2.11474px; height: 2.11474px; left: 44.3881%; bottom: 23.1036%; animation-duration: 11.0229s; animation-delay: 7.55242s;"></div><div class="dust-particle" style="width: 3.36232px; height: 3.36232px; left: 65.7067%; bottom: 24.6618%; animation-duration: 11.3201s; animation-delay: 2.97576s;"></div><div class="dust-particle" style="width: 3.68972px; height: 3.68972px; left: 34.7462%; bottom: 28.4608%; animation-duration: 11.5083s; animation-delay: 0.580754s;"></div><div class="dust-particle" style="width: 1.63985px; height: 1.63985px; left: 66.2556%; bottom: 36.9481%; animation-duration: 7.92445s; animation-delay: 5.63709s;"></div><div class="dust-particle" style="width: 3.34928px; height: 3.34928px; left: 49.2522%; bottom: 44.8764%; animation-duration: 14.8844s; animation-delay: 3.23796s;"></div><div class="dust-particle" style="width: 3.52851px; height: 3.52851px; left: 33.527%; bottom: 42.7403%; animation-duration: 7.19839s; animation-delay: 1.32933s;"></div><div class="dust-particle" style="width: 1.57918px; height: 1.57918px; left: 34.9279%; bottom: 44.601%; animation-duration: 8.69832s; animation-delay: 1.00017s;"></div><div class="dust-particle" style="width: 3.34633px; height: 3.34633px; left: 22.7326%; bottom: 36.4044%; animation-duration: 7.66478s; animation-delay: 5.17632s;"></div><div class="dust-particle" style="width: 2.96059px; height: 2.96059px; left: 44.0562%; bottom: 9.30236%; animation-duration: 7.57897s; animation-delay: 7.17876s;"></div><div class="dust-particle" style="width: 2.04886px; height: 2.04886px; left: 66.6306%; bottom: 27.3125%; animation-duration: 11.8722s; animation-delay: 1.90081s;"></div><div class="dust-particle" style="width: 1.35712px; height: 1.35712px; left: 60.6161%; bottom: 45.62%; animation-duration: 13.4481s; animation-delay: 2.31859s;"></div><div class="dust-particle" style="width: 3.01466px; height: 3.01466px; left: 63.3392%; bottom: 30.996%; animation-duration: 9.22105s; animation-delay: 6.33008s;"></div><div class="dust-particle" style="width: 2.65905px; height: 2.65905px; left: 36.1576%; bottom: 61.6137%; animation-duration: 13.4644s; animation-delay: 0.770649s;"></div><div class="dust-particle" style="width: 3.07325px; height: 3.07325px; left: 58.9655%; bottom: 40.9059%; animation-duration: 13.9371s; animation-delay: 6.78291s;"></div></div>
+  <div class="intro-petals" id="introPetals" aria-hidden="true"><div class="petal" style="left: 12.1974%; bottom: 7.6579%; width: 5.50624px; height: 3.41387px; animation-duration: 13.1207s; animation-delay: 7.75367s;"></div><div class="petal" style="left: 21.7156%; bottom: 8.79927%; width: 5.56545px; height: 3.45058px; animation-duration: 13.4962s; animation-delay: 3.84231s;"></div><div class="petal" style="left: 29.2635%; bottom: 8.95416%; width: 5.43596px; height: 3.37029px; animation-duration: 10.6882s; animation-delay: 9.50987s;"></div><div class="petal" style="left: 64.6904%; bottom: 7.36965%; width: 7.69513px; height: 4.77098px; animation-duration: 23.1568s; animation-delay: 4.36623s;"></div><div class="petal" style="left: 6.73939%; bottom: 11.1573%; width: 10.0523px; height: 6.23243px; animation-duration: 16.4403s; animation-delay: 6.63889s;"></div><div class="petal" style="left: 56.5987%; bottom: 0.860035%; width: 7.15987px; height: 4.43912px; animation-duration: 10.7284s; animation-delay: 5.24957s;"></div><div class="petal" style="left: 35.398%; bottom: 15.976%; width: 10.1992px; height: 6.32352px; animation-duration: 11.8913s; animation-delay: 0.401861s;"></div><div class="petal" style="left: 67.704%; bottom: 8.33332%; width: 9.40832px; height: 5.83316px; animation-duration: 19.962s; animation-delay: 0.450238s;"></div><div class="petal" style="left: 7.24258%; bottom: 8.85148%; width: 7.53326px; height: 4.67062px; animation-duration: 21.6662s; animation-delay: 8.95591s;"></div><div class="petal" style="left: 76.9959%; bottom: 15.6325%; width: 5.01466px; height: 3.10909px; animation-duration: 17.9163s; animation-delay: 9.7242s;"></div><div class="petal" style="left: 48.0388%; bottom: 2.7667%; width: 9.3821px; height: 5.8169px; animation-duration: 21.6803s; animation-delay: 8.12867s;"></div><div class="petal" style="left: 31.3005%; bottom: 10.6428%; width: 6.93759px; height: 4.30131px; animation-duration: 19.789s; animation-delay: 5.01922s;"></div><div class="petal" style="left: 24.9659%; bottom: 16.8947%; width: 9.18591px; height: 5.69527px; animation-duration: 15.8948s; animation-delay: 6.65974s;"></div><div class="petal" style="left: 84.7409%; bottom: 4.4717%; width: 7.60471px; height: 4.71492px; animation-duration: 12.6101s; animation-delay: 4.92608s;"></div><div class="petal" style="left: 66.4763%; bottom: 17.2986%; width: 8.91468px; height: 5.5271px; animation-duration: 12.4271s; animation-delay: 1.39206s;"></div><div class="petal" style="left: 69.7777%; bottom: 9.52949%; width: 6.36123px; height: 3.94396px; animation-duration: 23.7995s; animation-delay: 4.3529s;"></div><div class="petal" style="left: 8.13562%; bottom: 13.712%; width: 9.62956px; height: 5.97033px; animation-duration: 12.4336s; animation-delay: 1.51585s;"></div><div class="petal" style="left: 31.8815%; bottom: 5.59977%; width: 8.5504px; height: 5.30125px; animation-duration: 18.7231s; animation-delay: 6.51994s;"></div></div>
+
+  <!-- Floral clusters — bottom corners, lit only -->
+  <img class="intro-floral-left" id="introFloralLeft" alt="" aria-hidden="true" decoding="async" src="pn-shr-mot-floral-bush-cluster-x-v01.webp">
+  <img class="intro-floral-right" id="introFloralRight" alt="" aria-hidden="true" decoding="async" src="pn-shr-mot-floral-bush-cluster-x-v01.webp">
+
+  <!-- Diyas — arch gate floor, lit only -->
+  <div class="diya-wrap diya-left" id="diyaWrapLeft">
+    <img class="diya-img" id="introDiyaLeft" alt="" aria-hidden="true" decoding="async" src="pn-shr-mot-diya-glow-x-v01.webp">
+    <div class="diya-floor-glow"></div>
+  </div>
+  <div class="diya-wrap diya-right" id="diyaWrapRight">
+    <img class="diya-img" id="introDiyaRight" alt="" aria-hidden="true" decoding="async" src="pn-shr-mot-diya-glow-x-v01.webp">
+    <div class="diya-floor-glow"></div>
+  </div>
+
+  <!-- Jhoomer — lit only -->
+  <img class="intro-jhoomer" id="introJhoomer" alt="" aria-hidden="true" decoding="async" src="assets/shared/pn-shr-mot-jhoomer-hanging-x-v01.webp">
+
+  <!-- Rope anchor glow -->
+  <div class="rope-anchor-glow" aria-hidden="true"></div>
+
+  <!-- ROPE — the hero interaction -->
+  <button class="rope-button rope-ready rope-idle" id="ropeButton" type="button" aria-label="Pull the rope to light our celebration">
+    <img class="rope-img" id="ropeImg" alt="" aria-hidden="true" draggable="false" src="pn-hro-el-rope-hemp-pull-x-v01.webp">
+    <span class="rope-halo" aria-hidden="true"></span>
+  </button>
+
+  <!-- Instruction (dark state) -->
+  <div class="intro-instruction" id="introInstruction" aria-hidden="true">
+    <div class="pull-ritual-cue"></div>
+    <span class="pull-label">Pull to light us up</span>
+  </div>
+  <div class="pull-feedback" id="pullFeedback" aria-hidden="true">A little deeper to wake the lights</div>
+
+  <!-- Text reveal -->
+  <div class="intro-reveal" id="introReveal" aria-live="polite">
+    <h1 class="names intro-reveal-item" id="introNames">
+      <span class="word">Sejal</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">Yash</span>
+    </h1>
+    <div class="ornament intro-reveal-item" id="introOrnament">
+      <span></span><i></i><span></span>
+    </div>
+    <p class="hashtag  intro-reveal-item" id="introhashtag">#yashwalesejallejayge</p>
+    <p class="venue intro-reveal-item" id="introVenue">#yashwalesejallejayge </p>
+  </div>
+
+  <!-- Lotus CTA -->
+  <div class="lotus-cta-group" id="lotusCTAGroup">
+    <button class="lotus-button" id="lotusButton" type="button" aria-label="Tap the lotus to join us">
+      <img class="lotus-glow-burst" id="lotusGlowBurst" alt="" aria-hidden="true" decoding="async" src="pn-fx-ovl-lotus-glow-burst-x-v01.webp">
+      <img class="lotus-icon-img" id="lotusIconImg" alt="" aria-hidden="true" draggable="false" src="pn-rvl-btn-lotus-closed-x-v01.webp">
+      <img class="lotus-open-img" id="lotusOpenImg" alt="" aria-hidden="true" draggable="false" src="pn-rvl-btn-lotus-open-x-v01.webp">
+    </button>
+    <p class="lotus-cta-label" id="lotusButtonText" aria-hidden="true">Tap the lotus to join us</p>
+  </div>
+
+  <button class="skip-intro" id="skipIntro" type="button">skip intro</button>
+</section>
+
+<!-- ═══════════════════════════════════
+     PAGE SHELL
+═══════════════════════════════════ -->
+<main class="page-shell">
+  <section class="section invite-section" id="invite" aria-labelledby="inviteTitle">
+
+    <!-- Layer 1 — Pichwai background, ken-burns -->
+    <div class="invite-bg" aria-hidden="true"></div>
+
+    <!-- Layer 2 — Dark vignette -->
+    <div class="invite-vignette" aria-hidden="true"></div>
+
+    <!-- Rose petal shower, spawned from bird positions -->
+    <canvas class="invite-petals" id="invitePetals" aria-hidden="true"></canvas>
+
+    <!-- Birds — spritesheet, two birds chasing left→right -->
+    <div class="invite-birds" id="inviteBirds" aria-hidden="true">
+      <div class="inv-bird inv-bird--a" id="invBirdA"></div>
+      <div class="inv-bird inv-bird--b" id="invBirdB"></div>
+    </div>
+
+    <!-- Layer 3 — Arch PNG as floating frame (card-wrap contains ONLY the arch) -->
+    <div class="invite-card-wrap">
+      <img class="invite-arch-frame" src="pn-inv-fr-card-m-v01.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+    </div>
+
+    <!-- Layer 4 — Text, absolutely positioned within the section -->
+    <div class="invite-text-content">
+
+      <!-- Grandparents blessing — shown when HAS_GRANDPARENTS = true in script.js -->
+      <div class="inv-blessing" style="display: none;">
+        <p class="inv-overline">With the blessings of</p>
+        <p>Late Smt. Kamla Kapoor &amp; Shri Harish Kapoor</p>
+        <p>Smt. Leela Sharma &amp; Shri Mohan Sharma</p>
+      </div>
+
+      <!-- Alternative top block — shown when HAS_GRANDPARENTS = false in script.js -->
+      <div class="inv-blessing-alt">
+        <p class="inv-blessing-alt-line1">With the blessings of the divine</p>
+        <p class="inv-blessing-alt-line2">and the love of our families</p>
+        <p class="inv-blessing-alt-line3">Together we invite you to celebrate</p>
+      </div>
+
+      <p class="inv-kicker" style="display: none;">Together with their families</p>
+
+      <img class="inv-lotus-div" src="pn-inv-div-lotus-divider-x-v01.webp" alt="" aria-hidden="true" decoding="async">
+
+      <h2 class="inv-names" id="inviteTitle">Sejal <span class="inv-amp">&amp;</span> Yash</h2>
+
+      <img class="inv-lotus-div" src="pn-inv-div-lotus-divider-x-v01.webp" alt="" aria-hidden="true" decoding="async">
+
+      <div class="inv-parents">
+        <p>D/O Mr. Nitin Jindal  &amp; Mrs. Poonam Jindal</p>
+        <p>S/O Mr. Rajesh Aggarwal &amp; Mrs. Bimla Aggarwal</p>
+      </div>
+
+      <p class="inv-occasion">invite you to celebrate their wedding</p>
+
+      <div class="inv-meta">
+        <p class="inv-date"> 26 JUNE 2026</p>
+		<br>
+        <p class="inv-venue">THE AKM RESORTS</p>
+      </div>
+
+    </div>
+	<br>
+    <!-- CTA outside the arch — floats on the Pichwai background -->
+    <div class="inv-cta">
+      <a class="inv-btn" href="#events">View Events</a>
+    </div>
+
+  </section>
+
+  <section class="section events-section" id="events" aria-labelledby="evtTitle">
+
+    <!-- Background gradient -->
+    <div class="evt-bg" aria-hidden="true"></div>
+    <!-- Rose watercolor texture at very low opacity -->
+    <div class="evt-tex-overlay" aria-hidden="true"></div>
+    <!-- Starfield canvas — open night sky feel -->
+    <canvas class="evt-stars" id="evtStars" aria-hidden="true" width="1366" height="1797"></canvas>
+    <div class="evt-bg-vignette" aria-hidden="true"></div>
+    <div class="evt-birds" id="evtBirds" aria-hidden="true"><span class="evt-bird" style="--bird-top: 7%; --bird-w: 24px; --bird-dur: 30s; --bird-del: 0s; --bird-drift: -16px;"></span><span class="evt-bird" style="--bird-top: 13%; --bird-w: 16px; --bird-dur: 38s; --bird-del: -11s; --bird-drift: -8px;"></span><span class="evt-bird" style="--bird-top: 19%; --bird-w: 28px; --bird-dur: 24s; --bird-del: -20s; --bird-drift: -24px;"></span><span class="evt-bird" style="--bird-top: 10%; --bird-w: 14px; --bird-dur: 44s; --bird-del: -6s; --bird-drift: -10px;"></span><span class="evt-bird" style="--bird-top: 25%; --bird-w: 20px; --bird-dur: 28s; --bird-del: -33s; --bird-drift: -18px;"></span><span class="evt-bird" style="--bird-top: 5%; --bird-w: 18px; --bird-dur: 35s; --bird-del: -17s; --bird-drift: -12px;"></span></div>
+
+    <!-- Jhoomer — top center, pendulum sway -->
+    <div class="evt-jhoomer-wrap" aria-hidden="true">
+      <div class="evt-jhoomer-inner">
+        <img class="evt-jhoomer-img" src="pn-shr-mot-jhoomer-hanging-x-v01.webp" alt="" decoding="async" loading="lazy" draggable="false">
+      </div>
+    </div>
+
+    <!-- Floral corners — proper individual assets, no mirror hack -->
+    <img class="evt-corner evt-corner--tl" src="pn-shr-div-floral-corner-top-left-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+    <img class="evt-corner evt-corner--tr" src="pn-shr-div-floral-corner-top-right-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Floral border — bottom edge -->
+    <div class="evt-floral-border evt-floral-border--bot" aria-hidden="true">
+      <img src="pn-shr-div-floral-border-horizontal-x-v01.webp" alt="" decoding="async" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Warm ambient glow -->
+    <div class="evt-glow-mid" aria-hidden="true"></div>
+
+    <!-- ── LEFT COLUMN (top → bottom) ── -->
+    <!-- Banana leaf — upper left -->
+    <img class="evt-bananaleaf" src="Banaleaf.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Peacock — mid left, faces inward naturally -->
+    <img class="evt-peacock" id="evtPeacock" src="pn-shr-mot-peacock-main-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Diya — lower left -->
+    <img class="evt-diya evt-diya--l" src="Diya.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- ── RIGHT COLUMN (top → bottom) ── -->
+    <!-- Chhatri — upper right -->
+    <img class="evt-chhatri" src="pn-shr-mot-chhatri-ornate-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Elephant — mid right, mirrored to face inward -->
+    <img class="evt-elephant" id="evtElephant" src="pn-shr-mot-elephant-main-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Diya — lower right -->
+    <img class="evt-diya evt-diya--r" src="Diya.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- ── BOTTOM CENTRE ── -->
+    <!-- Cow — peeking from below, centred -->
+    <img class="evt-cow" src="pn-shr-mot-cow-main-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Floating lotus accents — subtle, two positions only -->
+    <img class="evt-lotus evt-lotus--1" src="pn-shr-mot-lotus-flower-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+    <img class="evt-lotus evt-lotus--2" src="pn-shr-mot-lotus-flower-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Section header — children animate in when parent enters view -->
+    <div class="evt-header reveal-item" id="evtHeader">
+      <p class="evt-eyebrow">Celebration Journey</p>
+      <h2 class="evt-title" id="evtTitle">Our Events</h2>
+      <img class="evt-divider" src="pn-evt-div-lotus-vine-x-v01.webp" alt="" aria-hidden="true" decoding="async">
+    </div>
+
+    <!-- Ceremonial journey — vine path + event cards -->
+    <div class="evt-journey">
+      <div class="evt-path-wrap" id="evtPathWrap" aria-hidden="true">
+        <img class="evt-path-vine" src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/event/pn-evt-pth-ceremonial-vine-m-v01.webp" alt="" aria-hidden="true" decoding="async">
+      </div>
+      <div class="evt-stops" id="evtStops" role="list"></div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       MEET THE COUPLE — Secret Garden Reveal
+  ═══════════════════════════════════ -->
+  <section class="section cpl-section" id="couple" aria-labelledby="cplTitle">
+
+   <div class="invitation-container">
+        <span class="badge">Save The Date</span>
+        
+        <!-- Customize Names Here -->
+        <h1 class="couple-names">Live Countdown</h1>
+        
+        <p class="wedding-details">Counting the Moments Until we celebrate</p>
+        
+        <!-- Live Countdown Timer -->
+        <div class="countdown-wrapper" id="countdown-grid">
+            <div class="countdown-box">
+                <span class="time-number" id="days">00</span>
+                <span class="time-label">Days</span>
+            </div>
+            <div class="countdown-box">
+                <span class="time-number" id="hours">00</span>
+                <span class="time-label">Hours</span>
+            </div>
+            <div class="countdown-box">
+                <span class="time-number" id="minutes">00</span>
+                <span class="time-label">Mins</span>
+            </div>
+            <div class="countdown-box">
+                <span class="time-number" id="seconds">00</span>
+                <span class="time-label">Secs</span>
+            </div>
+        </div>
+
+        <!-- Expired Message -->
+        <div id="expired-message">The Celebration Has Begun! 🎉</div>
+
+        <!-- Wedding Date Display -->
+        <p style="letter-spacing: 1px; font-weight: 300; margin-bottom: 1.5rem;">
+            June 26, 2026 &bull; 8:30 PM
+        </p>
+
+        <a href="#" class="btn-rsvp">View Invitation</a>
+    </div>
+
+  </section>
+
+  
+
+  <!-- ═══════════════════════════════════
+       RSVP — Royal Night Finale
+  ═══════════════════════════════════ -->
+  <section class="section rsvp-section" id="rsvp" aria-labelledby="rsvpHeadline">
+
+    <!-- Background: palace courtyard at night -->
+    <div class="rsvp-bg" aria-hidden="true"></div>
+
+    <!-- Subtle readability veil — central gradient, lets bg breathe -->
+    <div class="rsvp-veil" aria-hidden="true"></div>
+
+    <!-- ── Live animation canvas: fireworks ── -->
+    <canvas class="rsvp-fireworks-canvas" id="rsvpFireworksCanvas" aria-hidden="true" width="1366" height="1151"></canvas>
+
+
+    <!-- ── Ambient lamp glows (lower courtyard) ── -->
+    <div class="rsvp-lamp-glows" aria-hidden="true">
+      <span class="rsvp-lamp rsvp-lamp--l"></span>
+      <span class="rsvp-lamp rsvp-lamp--r"></span>
+      <span class="rsvp-lamp rsvp-lamp--cl"></span>
+      <span class="rsvp-lamp rsvp-lamp--cr"></span>
+    </div>
+
+    <!-- ── Lotus divider (from provided asset, top of section) ── -->
+    <div class="rsvp-lotus-top" aria-hidden="true">
+      <img src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/assets/rsvp/pn-rsvp-div-finale-lotus-x-v01.webp" alt="" decoding="async" loading="lazy">
+    </div>
+
+    <!-- ── Content block ── -->
+    <div class="rsvp-content">
+
+      <p class="rsvp-eyebrow  rsvp-reveal" aria-hidden="true">JOIN THE CELEBRATION</p>
+
+      <h2 class="rsvp-headline rsvp-reveal" id="rsvpHeadline">
+        <span class="rsvp-hl-will"></span>
+        <span class="rsvp-hl-join">Will you join us?</span>
+      </h2>
+
+      <p class="rsvp-body rsvp-reveal">We've saved a seat for you — at our table, in our hearts, and under the royal sky. Come celebrate with us as we begin this new chapter together.</p>
+
+      <!-- Primary CTA -->
+      <div class="rsvp-cta-wrap rsvp-reveal">
+        <a class="rsvp-btn-primary" href="https://wa.me/9815330587?text=Yes%2C%20I%27ll%20be%20there%20%E2%80%94%20Sejal%20%26%20Yash%27s%20celebration!" target="_blank" rel="noreferrer" aria-label="RSVP — Yes, I'll be there. Opens WhatsApp.">
+          <span class="rsvp-btn-inner">Yes, I'll be there</span>
+        </a>
+        <p class="rsvp-helper">You'll be redirected to WhatsApp to confirm your attendance.</p>
+      </div>
+
+      <!-- Save the Date -->
+      <div class="rsvp-std rsvp-reveal">
+        <p class="rsvp-std-heading">SAVE THE DATE</p>
+        <div class="rsvp-std-btns">
+          <a class="rsvp-cal-btn" id="rsvpGcalBtn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Sejal%20weds%20Yash&amp;dates=20260626/20260626&amp;location=" target="_blank" rel="noreferrer" aria-label="Add to Google Calendar">
+            <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"></rect>
+              <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+            Add to Google Calendar
+          </a>
+          <a class="rsvp-cal-btn" id="rsvpIcalBtn" href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260626%0ADTEND:20260626%0ASUMMARY:Sejal%20weds%20Yash%0ALOCATION:%0AEND:VEVENT%0AEND:VCALENDAR" download="Sejal-Yash-wedding.ics" aria-label="Add to Apple Calendar">
+            <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"></rect>
+              <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+              <path d="M10 11v3M8.5 14h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+            Add to Apple Calendar
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /rsvp-content -->
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CLOSING — Love note farewell
+  ═══════════════════════════════════ -->
+  <section class="section closing-section" id="closing" aria-labelledby="closingTitle">
+    <div class="closing-bg" aria-hidden="true"></div>
+    <div class="closing-veil" aria-hidden="true"></div>
+
+    <div class="closing-content reveal-item">
+      <div class="rsvp-closing-frame">
+        <span class="rsvp-corner rsvp-corner--tr" aria-hidden="true"></span>
+        <span class="rsvp-corner rsvp-corner--bl" aria-hidden="true"></span>
+
+        <img class="closing-lotus" src="pn-inv-div-lotus-divider-x-v01.webp" alt="" aria-hidden="true" decoding="async" loading="lazy">
+
+        <p class="closing-eyebrow">With all our love</p>
+
+        <h2 class="closing-names" id="closingTitle">Sejal &amp; Yash</h2>
+
+        <div class="closing-ornament" aria-hidden="true">
+          <span></span>
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="11" cy="8" rx="2.8" ry="5.8" fill="rgba(216,169,87,.72)" transform="rotate(0   11 11)"></ellipse>
+            <ellipse cx="11" cy="8" rx="2.8" ry="5.8" fill="rgba(216,169,87,.52)" transform="rotate(60  11 11)"></ellipse>
+            <ellipse cx="11" cy="8" rx="2.8" ry="5.8" fill="rgba(216,169,87,.52)" transform="rotate(-60 11 11)"></ellipse>
+            <ellipse cx="11" cy="8" rx="2.2" ry="4.8" fill="rgba(216,169,87,.34)" transform="rotate(120 11 11)"></ellipse>
+            <ellipse cx="11" cy="8" rx="2.2" ry="4.8" fill="rgba(216,169,87,.34)" transform="rotate(-120 11 11)"></ellipse>
+            <ellipse cx="11" cy="8" rx="1.8" ry="4.2" fill="rgba(216,169,87,.22)" transform="rotate(180 11 11)"></ellipse>
+            <circle cx="11" cy="11" r="2.0" fill="rgba(216,169,87,.85)"></circle>
+          </svg>
+          <span></span>
+        </div>
+
+        <p class="closing-line">You make this moment complete.</p>
+        <p class="closing-date">26 · June · 2026</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" style="text-align:center;padding:28px 16px 36px;background:#0a0908;color:rgba(216,169,87,.72);font-family:inherit;letter-spacing:.08em;font-size:.78rem;">
+  <p class="ft-credit" style="margin:0;">Crafted with love by <a href="https://www.instagram.com/designers_barish?igsh=Z2Y2cmo2bGl3NWU4" target="_blank" rel="noopener" style="color:#d8a957;text-decoration:none;border-bottom:1px solid rgba(216,169,87,.4);">Barish Designers</a></p>
+</footer>
+
+<nav class="floating-menu" id="floatingMenu" aria-label="Navigation">
+
+  <!-- Circular Pichwai menu panel -->
+  <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Site navigation">
+    <div class="menu-bg-circle">
+      <img class="menu-bg-img" src="https://pub-1cc0f6e993214be9a36badeeb631f4b6.r2.dev/templates/template09/Menu_background.webp" alt="" aria-hidden="true" draggable="false">
+    </div>
+    <div class="menu-nav-header" aria-hidden="true">Navigation</div>
+    <div class="menu-lotus-top" aria-hidden="true">
+      <svg viewBox="0 0 32 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="28">
+        <ellipse cx="16" cy="14" rx="6" ry="5" fill="#d8a957" opacity=".7"></ellipse>
+        <ellipse cx="8" cy="12" rx="5" ry="4" fill="#d8a957" opacity=".5"></ellipse>
+        <ellipse cx="24" cy="12" rx="5" ry="4" fill="#d8a957" opacity=".5"></ellipse>
+      </svg>
+    </div>
+    <nav class="menu-links" aria-label="Page sections">
+      <a class="menu-link" href="#" id="menuHome">Home</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#invite">Invite</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#events">Events</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#couple">Live Countdown</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#rsvp">RSVP</a>
+    </nav>
+  </div>
+
+  <!-- Music toggle button (above compass) -->
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Play music" aria-pressed="false">
+    <img class="music-icon-img" src="music_icon.webp" alt="" aria-hidden="true" draggable="false">
+  </button>
+
+  <!-- Compass toggle button -->
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+    <img class="compass-img" src="compass.webp" alt="Navigation compass" draggable="false">
+  </button>
+</nav>
+
+<!-- Background music — starts on rope pull -->
+<audio id="bgMusic" src="Template_09.mp3" loop="" preload="none"></audio>
+
+<script src="script.js" defer=""></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cfg = window.__WEDDING_CONFIG__;
+  if (!cfg || !cfg.invite || cfg.invite.parentsOrder !== 'groom_first') return;
+  var bEl = document.getElementById('iBrideParents');
+  var gEl = document.getElementById('iGroomParents');
+  if (bEl) { var em = bEl.closest('.fam-parents') && bEl.closest('.fam-parents').querySelector('em'); if (em) em.textContent = 'Son of'; }
+  if (gEl) { var em2 = gEl.closest('.fam-parents') && gEl.closest('.fam-parents').querySelector('em'); if (em2) em2.textContent = 'Daughter of'; }
+});
+</script>
+<script>
+document.addEventListener('click', function(e) {
+  if (e.defaultPrevented) return;
+  var link = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (!link) return;
+  var href = link.getAttribute('href') || '';
+  if (!href || href === '#') return;
+  var id = href.slice(1);
+  try { id = decodeURIComponent(id); } catch (_) {}
+  var target = document.getElementById(id);
+  if (!target) return;
+  e.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+<script>
+        // Set the targeted wedding date and time (June 26, 2026, at 20:30)
+        const targetDate = new Date("June 26, 2026 20:30:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            // Display results with leading zeros
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the countdown is finished
+            if (difference < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown-grid").style.display = "none";
+                document.getElementById("expired-message").style.display = "block";
+            }
+        }, 1000);
+    </script>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;ef5558f7810c49329caed0202f5f2d8d&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
